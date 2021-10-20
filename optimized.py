@@ -21,7 +21,7 @@ def get_actions_list(data_doc):
         csv_list = list(csv.reader(csv_file))
         actions_list = []
         for row in csv_list[1:]:
-            if float(row[1]) > 0:
+            if float(row[1]) > 0 and float(row[2]) > 0:
                 # Calculate profits
                 round_profit = round(float(row[1]) * float(row[2]))
                 # Create a list of all actions if data is usable
@@ -29,8 +29,17 @@ def get_actions_list(data_doc):
     return actions_list
 
 
-def knapSack(money, list_actions):
-    new_line = "\n"
+def knap_sack(money, list_actions):
+    """Dynamic programming to find the best investment.
+
+    Args:
+        money ([int]): [max amout capacity]
+        list_actions ([list]): [the return of get_actions_list()]
+
+    Returns:
+        [f-string]: [the best investment]
+    """
+
     max_money = money
     actions_number = len(list_actions)
     K = [[0 for x in range(max_money + 1)] for y in range(actions_number + 1)]
@@ -73,6 +82,6 @@ def knapSack(money, list_actions):
     return final_combination
 
 
-print(knapSack(500, get_actions_list("dataset2_Python+P7.csv")))
+print(knap_sack(500, get_actions_list("dataset2_Python+P7.csv")))
 end = time.time()
 print(end - start)
