@@ -25,7 +25,7 @@ def get_actions_list(data_doc):
                 # Calculate profits
                 round_profit = round(float(row[1]) * float(row[2]))
                 # Create a list of all actions if data is usable
-                actions_list.append([row[0], round(float(row[1])), round_profit])
+                actions_list.append([row[0], int(float(row[1]) * 100), round_profit])
     return actions_list
 
 
@@ -40,7 +40,7 @@ def knap_sack(money, list_actions):
         [f-string]: [the best investment]
     """
 
-    max_money = money
+    max_money = money * 100
     actions_number = len(list_actions)
     K = [[0 for x in range(max_money + 1)] for y in range(actions_number + 1)]
 
@@ -75,13 +75,21 @@ def knap_sack(money, list_actions):
     new_line = "\n"
     final_combination = (
         f"COMBINATION : {[x[0] for x in final_list_actions]}"
-        f"{new_line}PRICE : {sum([x[1] for x in final_list_actions])}€"
+        f"{new_line}PRICE : {sum([x[1] for x in final_list_actions]) / 100}€"
         f"{new_line}PROFITS : {sum([x[2] for x in final_list_actions]) / 100}€"
     )
 
+    with open("dataset2_Python+P7.csv") as csv_file:
+        csv_list = list(csv.reader(csv_file))
+
+    real_profit = 0
+    for el in csv_list:
+        if el[0] in [x[0] for x in final_list_actions]:
+            real_profit += (float(el[1]) * float(el[2])) / 100
+
+    print(f"real profit : {round(real_profit, 2)}")
     return final_combination
 
 
 print(knap_sack(500, get_actions_list("dataset2_Python+P7.csv")))
-end = time.time()
-print(end - start)
+print(f"time : {time.time() - start}")
