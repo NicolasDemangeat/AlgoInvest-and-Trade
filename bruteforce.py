@@ -38,11 +38,9 @@ def force_brute(max_money, elements):
     """
     remaining_combinations = []
     length = len(elements)
-    i = 1
     # Search every combination of 1:n elements
-    while i <= length:
+    for i in range(1, length + 1):
         combination = list(itertools.combinations(elements, i))
-        i += 1
         for possibilities in combination:
             price = 0
             profit = 0
@@ -67,11 +65,10 @@ def force_brute(max_money, elements):
     sorted_combinations = sorted(sorted_combinations, key=lambda k: k["price"])
 
     # Organise results
-    new_line = "\n"
     final_combination = (
         f'COMBINATION : {[x[0] for x in sorted_combinations[0]["combination"]]}'
-        f'{new_line}PRICE : {(sorted_combinations[0]["price"])}€'
-        f'{new_line}PROFITS : {(sorted_combinations[0]["profit"])}€'
+        f'\nPRICE : {(sorted_combinations[0]["price"])}€'
+        f'\nPROFITS : {(sorted_combinations[0]["profit"])}€'
     )
     return final_combination
 
