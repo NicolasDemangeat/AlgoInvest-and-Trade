@@ -73,8 +73,9 @@ def knap_sack(money, list_actions):
         csv_list = list(csv.reader(csv_file))
 
     real_profit = 0
+    final_list_actions_names = [x[0] for x in final_list_actions]
     for el in csv_list:
-        if el[0] in [x[0] for x in final_list_actions]:
+        if el[0] in final_list_actions_names:
             real_profit += (float(el[1]) * float(el[2])) / 100
 
     new_line = "\n"
